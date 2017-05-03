@@ -1,0 +1,42 @@
+<h1>
+  {{title}}
+</h1>
+
+<bric-map [config]="config" [layers]="layers" (mapInitialized)="map = $event" (mapEvent)="mapEvent($event)"></bric-map>
+<div>
+  <h2>Control the map</h2>
+  <div>
+    <label for="scale-line-ctrl">Scale Line</label>
+    <input type="checkbox" id="scale-line-ctrl" [(ngModel)]="config.scaleLine">
+  </div>
+  <div>
+    <label for="overview-map-ctrl">Overview Map</label>
+    <input type="checkbox" id="overview-map-ctrl" [(ngModel)]="showOverviewMap" (change)="updateOverviewMap()">
+  </div>
+  <div>
+    <h3>Layers</h3>
+    <table style="width:100%; text-align:center">
+      <tr>
+        <th>Layer</th>
+        <th>Active</th>
+        <th>Alpha</th>
+        <th>Visible</th>
+        <th>Cluster</th>
+        <th>Cluster Distance</th>
+        <th>Cluster Color</th>
+        <th>Cluster Zoom</th>
+      </tr>
+      <tr *ngFor="let layer of definedLayers; let i = index">
+        <td>{{layer.id}}</td>
+        <td><input type="checkbox" [(ngModel)]="activeLayer[i]" (change)="updateLayers()"></td>
+        <td><input type="range" [(ngModel)]="layer.alpha" min="0" max="1" step="0.1"></td>
+        <td><input type="checkbox" [(ngModel)]="layer.visible"></td>
+        <td><input *ngIf="layer.type == 1" type="checkbox" [(ngModel)]="layer.cluster"></td>
+        <td><input *ngIf="layer.cluster" type="range" [(ngModel)]="layer.clusterDistance" min="1" max="500" step="5"></td>
+        <td><input *ngIf="layer.cluster" type="color" [(ngModel)]="layer.clusterColor"></td>
+        <td><input *ngIf="layer.cluster" type="range" [(ngModel)]="layer.clusterZoom" [min]="layer.minZoom" [max]="layer.maxZoom" step="1"></td>
+      </tr>
+    </table>
+    <button (click)="switchLang()">Change Urbis layer language</button>
+  </div>
+</div>
