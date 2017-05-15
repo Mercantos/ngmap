@@ -1,42 +1,36 @@
-<h1>
-  {{title}}
-</h1>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Bric Gis examples</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown"><a href="#" class="dropdown-toggle" ngClass="{'active': example=='basic-map'}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Basic examples<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#" ngClass="{'active': example=='basic-map'}" (click)="example='basic-map'">Simple map</a></li>
+                <li><a href="#" ngClass="{'active': example=='config-map'}" (click)="example='config-map'">Map configuration</a></li>
+                <li><a href="#" ngClass="{'active': example=='wfs-map'}" (click)="example='wfs-map'">WFS layers</a></li>
+            </ul>
+            </li>
+            <li><a href="#about">Advanced map</a></li>
+            <li><a href="#contact">Address search</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
-<bric-map [config]="config" [layers]="layers" (mapInitialized)="map = $event" (mapEvent)="mapEvent($event)"></bric-map>
-<div>
-  <h2>Control the map</h2>
-  <div>
-    <label for="scale-line-ctrl">Scale Line</label>
-    <input type="checkbox" id="scale-line-ctrl" [(ngModel)]="config.scaleLine">
-  </div>
-  <div>
-    <label for="overview-map-ctrl">Overview Map</label>
-    <input type="checkbox" id="overview-map-ctrl" [(ngModel)]="showOverviewMap" (change)="updateOverviewMap()">
-  </div>
-  <div>
-    <h3>Layers</h3>
-    <table style="width:100%; text-align:center">
-      <tr>
-        <th>Layer</th>
-        <th>Active</th>
-        <th>Alpha</th>
-        <th>Visible</th>
-        <th>Cluster</th>
-        <th>Cluster Distance</th>
-        <th>Cluster Color</th>
-        <th>Cluster Zoom</th>
-      </tr>
-      <tr *ngFor="let layer of definedLayers; let i = index">
-        <td>{{layer.id}}</td>
-        <td><input type="checkbox" [(ngModel)]="activeLayer[i]" (change)="updateLayers()"></td>
-        <td><input type="range" [(ngModel)]="layer.alpha" min="0" max="1" step="0.1"></td>
-        <td><input type="checkbox" [(ngModel)]="layer.visible"></td>
-        <td><input *ngIf="layer.type == 1" type="checkbox" [(ngModel)]="layer.cluster"></td>
-        <td><input *ngIf="layer.cluster" type="range" [(ngModel)]="layer.clusterDistance" min="1" max="500" step="5"></td>
-        <td><input *ngIf="layer.cluster" type="color" [(ngModel)]="layer.clusterColor"></td>
-        <td><input *ngIf="layer.cluster" type="range" [(ngModel)]="layer.clusterZoom" [min]="layer.minZoom" [max]="layer.maxZoom" step="1"></td>
-      </tr>
-    </table>
-    <button (click)="switchLang()">Change Urbis layer language</button>
-  </div>
-</div>
+    <div class="container">
+
+      <div class="starter-template">
+        <basic-map *ngIf="example=='basic-map'"></basic-map>
+        <config-map *ngIf="example=='config-map'"></config-map>
+        <wfs-map *ngIf="example=='wfs-map'" (changePage)="example=$event"></wfs-map>
+      </div>
+
+    </div>

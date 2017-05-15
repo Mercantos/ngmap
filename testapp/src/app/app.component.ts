@@ -7,7 +7,7 @@ import { BricMapConfig, BricMapLayer, BricMapLayerType, BricMapLayerSource } fro
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-	title = 'app works!';
+	example = 'basic-map';
 	
 	layers = new Array();
 	config = new BricMapConfig();

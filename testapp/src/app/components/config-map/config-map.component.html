@@ -1,0 +1,79 @@
+<div class="row">
+  <h1>Map configuration</h1>
+</div>
+<div class="row">
+  <h2>Description</h2>
+  <p class="description">Shows map configuration possibilities.</p>
+</div>
+<div class="row">
+  <h2>Example</h2>
+  <bric-map [config]="config" [layers]="layers"></bric-map>
+</div>
+<div class="row">
+  <h2>Code</h2>
+  <tabset>
+    <tab heading='Template'>
+      <pre>
+        <code>
+          &lt;bric-map [config]="config" [layers]="layers"&gt;&lt;/bric-map&gt;
+        </code>
+      </pre>
+    </tab>
+    <tab heading='Component'>
+      <pre>
+        <code [innerHTML]="componentCode"></code>
+      </pre>
+    </tab>
+  </tabset>
+</div>
+<div class="row">
+  <h2>Properties</h2>
+  <table class="table table-striped">
+    <thead class="thead-default">
+      <tr>
+        <th>Property name</th>
+        <th>Description</th>
+        <th>Possible values</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>minZoom</td>
+      <td>The min zoom level. Defines how much the user can zoom out.</td>
+      <td>Any number. Default is 8.</td>
+    </tr>
+    <tr>
+      <td>maxZoom</td>
+      <td>The max zoom level. Defines how much the user can zoom in.</td>
+      <td>Any number. Default is 20.</td>
+    </tr>
+    <tr>
+      <td>zoom</td>
+      <td>The default zoom level. Will be set at the map initialization.</td>
+      <td>Any number between min and max zoom. Default is 14.</td>
+    </tr>
+    <tr>
+      <td>projection</td>
+      <td>The projection to use for the map.</td>
+      <td>A valid projection. Default is EPSG:31370.</td>
+    </tr>
+    <tr>
+      <td>center</td>
+      <td>The default coordinates where the map will be centered at initialization.</td>
+      <td>An array of 2 numbers. Default is [149656, 169933.8] (more or less the center of Brussels.</td>
+    </tr>
+    <tr>
+      <td>scaleLine</td>
+      <td>Flag to control the display of the scaleline on the map.</td>
+      <td>Boolean. Default is false.</td>
+    </tr>
+    <tr>
+      <td>overviewMap</td>
+      <td>Property allowing to display a small map on the bottom left corner to allow the user to localize himself on the map when zooming.</td>
+      <td>Default is null (overview map is not displayed). If the id of one of the layers is used, the overviewmap is displayed and uses that layer.</td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+  <h2>Notes</h2>
+  <p>Configuration properties can be changed at execution except for center and zoom as these 2 properties will be changed by the user when he navigates.</p>
+</div>

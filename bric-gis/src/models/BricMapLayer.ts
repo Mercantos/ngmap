@@ -1,6 +1,8 @@
 import { MapEventService } from '../MapEvent.service';
 import { BricMapEvent } from './BricMapEvent';
 import { BricMapLayerStyle } from './BricMapLayerStyle';
+import * as ol from 'openlayers';
+
 export enum BricMapLayerSource {bric, custom}
 export enum BricMapLayerType {wms, wfs}
 
@@ -248,9 +250,14 @@ export class BricMapLayer {
 	}
 
 	private initCustomWmsSource() {
+		let params = {};
+		for (let n in this.params) {
+			params[n] = this.params[n];
+		}
+		params['LAYERS'] = this.layerName;
 		return new ol.source.TileWMS({
 			url: this.location,
-			params: this.params,
+			params: params,
 			projection: this.projection,
 			serverType: 'geoserver'
         });

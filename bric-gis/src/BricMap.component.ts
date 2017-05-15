@@ -59,9 +59,6 @@ export class BricMapComponent implements OnInit, DoCheck {
 		if (!this.map) {
             this.initMap();
         }
-        // Changes detection variables
-        this._configDiffer = this._kVDiffers.find(this.config).create(null);
-        this._layersDiffer = this._iDiffers.find(this.layers).create(null);
         this._mapEventService.events.subscribe(
             (event) => {
                 if(event) {
@@ -72,6 +69,12 @@ export class BricMapComponent implements OnInit, DoCheck {
 	}
 
     private initMap() {
+        if(!this.config || !this.layers) {
+            return;
+        }
+        // Changes detection variables
+        this._configDiffer = this._kVDiffers.find(this.config).create(null);
+        this._layersDiffer = this._iDiffers.find(this.layers).create(null);
 		proj4.defs(
             'EPSG:31370',
             '+proj=lcc +lat_1=51.16666723333333 +lat_2=49.8333339 +lat_0=90 +lon_0=4.367486666666666 +x_0=150000.013'
@@ -79,7 +82,6 @@ export class BricMapComponent implements OnInit, DoCheck {
             '+y_0=5400088.438 +ellps=intl +towgs84=-106.869,52.2978,-103.724,0.3366,-0.457,1.8422,-1.2747 +units=m +no_defs'
         );
         ol.proj.setProj4(proj4);
-        
         this.view = new ol.View({
             center: this.config.center,
             zoom: this.config.zoom,
@@ -108,6 +110,10 @@ export class BricMapComponent implements OnInit, DoCheck {
 	 * CHANGE DETECTION
 	 * ****************************/
     ngDoCheck() {
+        if (!this.map) {
+            this.initMap();
+        }
+        
         if (this._configDiffer) {
             const confChanges = this._configDiffer.diff(this.config);
             if (confChanges) {
@@ -123,10 +129,12 @@ export class BricMapComponent implements OnInit, DoCheck {
         }
 
         // Check if layers have changed
-        for (let i = 0; i < this.layers.length; i++) {
-            const layerChange = this._layersItemDiffer[this.layers[i].id].diff(this.layers[i]);
-            if (layerChange) {
-                this.updateLayerParams(layerChange, i);
+        if(this.layers) {
+            for (let i = 0; i < this.layers.length; i++) {
+                const layerChange = this._layersItemDiffer[this.layers[i].id].diff(this.layers[i]);
+                if (layerChange) {
+                    this.updateLayerParams(layerChange, i);
+                }
             }
         }
     }
@@ -134,7 +142,6 @@ export class BricMapComponent implements OnInit, DoCheck {
     private updateMapConfig(changes:any) {
         changes.forEachChangedItem(
             (record: any) => {
-                let currentZoom = this.map.getView().getZoom();
                 switch(record.key) {
                     case 'projection':
                     case 'minZoom':
@@ -282,18 +289,20 @@ export class BricMapComponent implements OnInit, DoCheck {
 	 * ****************************/
     checkClusters() {
         let currentZoom = this.map.getView().getZoom();
-        for(let i = 0; i < this.layers.length; i++) {
-            let showCluster = false;
-            let layer = this.layers[i].getOpenlayerObject();
-            if(layer instanceof ol.layer.Group){
-                let zoomLevel = layer.get('clusterOn');
-                if(currentZoom < zoomLevel) {
-                    showCluster = this.layers[i].cluster;
+        if(this.layers){
+            for(let i = 0; i < this.layers.length; i++) {
+                let showCluster = false;
+                let layer = this.layers[i].getOpenlayerObject();
+                if(layer instanceof ol.layer.Group){
+                    let zoomLevel = layer.get('clusterOn');
+                    if(currentZoom < zoomLevel) {
+                        showCluster = this.layers[i].cluster;
+                    }
+                    layer.getLayers().item(0).setVisible(showCluster);
+                    layer.getLayers().item(1).setVisible(!showCluster);
+                    this.layers[i].getClusterInteraction().setActive(showCluster);
+                    this.layers[i].getFeaturesInteraction().setActive(!showCluster);
                 }
-                layer.getLayers().item(0).setVisible(showCluster);
-                layer.getLayers().item(1).setVisible(!showCluster);
-                this.layers[i].getClusterInteraction().setActive(showCluster);
-                this.layers[i].getFeaturesInteraction().setActive(!showCluster);
             }
         }
     }

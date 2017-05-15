@@ -18,10 +18,14 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-		"../node_modules/openlayers/dist/ol.css",
-        "styles.css"
+        "../node_modules/openlayers/dist/ol.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "assets/style.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.js"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",

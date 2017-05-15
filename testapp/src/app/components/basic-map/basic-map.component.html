@@ -1,0 +1,132 @@
+<div class="row">
+  <h1>Basic map</h1>
+</div>
+<div class="row">
+  <h2>Description</h2>
+  <p class="description">Shows a map with WMS layers.</p>
+</div>
+<div class="row">
+  <h2>Example</h2>
+  <bric-map [config]="config" [layers]="layers"></bric-map>
+</div>
+<div class="row">
+  <h2>Code</h2>
+  <tabset>
+    <tab heading='Template'>
+      <pre>
+        <code>
+          &lt;bric-map [config]="config" [layers]="layers"&gt;&lt;/bric-map&gt;
+        </code>
+      </pre>
+    </tab>
+    <tab heading='Component'>
+      <pre>
+        <code [innerHTML]="componentCode"></code>
+      </pre>
+    </tab>
+  </tabset>
+</div>
+<div class="row">
+  <h2>Properties</h2>
+  <table class="table table-striped">
+    <thead class="thead-default">
+      <tr>
+        <th>Property name</th>
+        <th>Description</th>
+        <th>Possible values</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>id</td>
+      <td>Unique ID to identify the layer</td>
+      <td>Any string value</td>
+    </tr>
+    <tr>
+      <td>source</td>
+      <td>Define if the layer will be a BRIC pre-configured layer or a custom layer</td>
+      <td>
+        Two possible values:
+        <ul>
+          <li>BricMapLayerSource.bric: BRIC pre-configured layer</li>
+          <li>BricMapLayerSource.custom: custom layer</li>
+        </ul>
+      </td>
+    </tr><tr>
+      <td>location</td>
+      <td>Location of the service (URL)</td>
+      <td>
+        For pre-configured layers, location is not a URL, it must be one of the available servers (see list bellow):
+        <ul>
+          <li>urbis</li>
+          <li>others</li>
+        </ul>
+
+        For custom layers, it has to be a valid URL.
+      </td>
+    </tr>
+    <tr>
+      <td>layerName</td>
+      <td>The name of the layer</td>
+      <td>
+        <p>For pre-configured layers, it has to be one of the list:</p>
+        <ul>
+          <li>municipality: Displays the municipalities limits (location must be urbis)</li>
+          <li>ortho: Displays the most recent aerial photographs (location must be urbis)</li>
+          <li>ortho2015: Displays the 2015 aerial photographs (location must be urbis)</li>
+          <li>ortho2012: Displays the 2012 aerial photographs (location must be urbis)</li>
+          <li>regional-roads: Displays the regional roads layer (location must be urbis)</li>
+        </ul>
+        <p>If a string is passed, the string is used as the <em>LAYERS</em> parameter in the request to the server</p>
+      </td>
+    </tr>
+    <tr>
+      <td>alpha</td>
+      <td>The layer opacity</td>
+      <td>Any value between 0 and 1. 0 is transparent, 1 is full opacity. Default is 1.</td>
+    </tr>
+    <tr>
+      <td>visible</td>
+      <td>The layer visibility</td>
+      <td>A boolean value. True makes the layer visible, False makes it invisible. Default is true.</td>
+    </tr>
+    <tr>
+      <td>projection</td>
+      <td>The projection to use with the layer</td>
+      <td>Any valid projection. Default is <em>EPSG:31370</em></td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>The type of layer</td>
+      <td>
+        For custom layers only. Defines if the layer is a WMS (pictures) or a WFS (data). Possible values are:
+        <ul>
+          <li>BricMapLayerType.wms</li>
+          <li>BricMapLayerType.wfs</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>params</td>
+      <td>List of parameters for the layer</td>
+      <td>For WMS custom layers only. A key-value object that will be sent as layer parameters. Can't contain the <em>'LAYERS'</em> key.</td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+  <h2>Events</h2>
+  <p>The bric-map component fires an event <em><strong>mapInitialized</strong></em> when the map is initializated. It returns the ol.map object.</p>
+  <p>The object can be used to manipulate the map and layers in order to implement things that the component doesn't include.</p>
+  <p>Usage : </p>
+  <pre>
+    <code>
+      &lt;bric-map [config]="config" [layers]="layers" (mapInitialized)="myMapObject"&gt;&lt;/bric-map&gt;
+    </code>
+  </pre>
+</div>
+<div class="row">
+  <h2>Notes</h2>
+  <p>The layers are displayed in the same order as the <em>layers</em> attribute. The index 0 is the bottom layer, the biggest index is on top.</p>
+  <p>It's possible to add or remove layers from the <em>layers</em> property but changing order will result in unpredictable result.</p>
+  <p>The properties source, projection and type can't be changed during execution. Other properties can be changed and will immediately affect the map.</p>
+
+</div>

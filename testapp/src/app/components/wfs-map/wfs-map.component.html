@@ -1,0 +1,108 @@
+<div class="row">
+  <h1>WFS layers</h1>
+</div>
+<div class="row">
+  <h2>Description</h2>
+  <p class="description">Shows a map with WFS layers (data layers).</p>
+</div>
+<div class="row">
+  <h2>Example</h2>
+  <bric-map [config]="config" [layers]="layers" (mapEvent)="setEvent($event)"></bric-map>
+  <div>
+    Event : 
+    <pre [innerHTML]="event"></pre>
+  </div>
+</div>
+<div class="row">
+  <h2>Code</h2>
+  <tabset>
+    <tab heading='Template'>
+      <pre>
+        <code>
+          &lt;bric-map [config]="config" [layers]="layers"&gt;&lt;/bric-map&gt;
+        </code>
+      </pre>
+    </tab>
+    <tab heading='Component'>
+      <pre>
+        <code [innerHTML]="componentCode"></code>
+      </pre>
+    </tab>
+  </tabset>
+</div>
+<div class="row">
+  <h2>Properties</h2>
+  <p>Layers properties are similar to <a href="#" (click)="changePage.emit('basic-map')">WMS layers</a>. Only extra properties are shown here.</p>
+  <table class="table table-striped">
+    <thead class="thead-default">
+      <tr>
+        <th>Property name</th>
+        <th>Description</th>
+        <th>Possible values</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>type</td>
+      <td>The type of layer</td>
+      <td>
+        For custom layers only. Defines if the layer is a WMS (pictures) or a WFS (data). Possible values are:
+        <ul>
+          <li>BricMapLayerType.wms</li>
+          <li>BricMapLayerType.wfs</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>styles</td>
+      <td>Define the layer style</td>
+      <td>A valid style object. See the <a href="#" (click)="changePage.emit('styled-wfs')">styling example</a></td>
+    </tr>
+    <tr>
+      <td>cluster</td>
+      <td>Activate or deactivate the clustering</td>
+      <td>Boolean, default is false. See the <a href="#" (click)="changePage.emit('cluster-map')">cluster example</a></td>
+    </tr>
+    <tr>
+      <td>selectable</td>
+      <td>Activate or deactivate the feature selection</td>
+      <td>Boolean, default is false.</td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+  <h2>Events</h2>
+  <p>If selectable is set to true, an event is triggered when a feature is selected or unselected.</p>
+  <p>Usage : </p>
+  <pre>
+    <code>
+  &lt;bric-map [config]="config" [layers]="layers" (mapEvent)="dealWithEvent($event)"&gt;&lt;/bric-map&gt;
+    </code>
+  </pre>
+  <p>The event is an object with the following properties</p>
+  <table class="table table-striped">
+    <thead class="thead-default">
+      <tr>
+        <th>Property name</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>feature</td>
+        <td>An ol.Feature object that represents the selected/unselected feature.</td>
+      </tr>
+      <tr>
+        <td>layer</td>
+        <td>The layer id on witch the action has occured.</td>
+      </tr>
+      <tr>
+        <td>action</td>
+        <td>The action type. Can be <em>select</em> if the feature has been selected or <em>unselect</em> if the feature has been unselected.</td>
+      </tr>
+    </thead>
+  </table>
+</div>
+<div class="row">
+  <h2>Notes</h2>
+  <p>The selectable flag allows selection of only one feature at the time. It's not possible to select more than one.</p>
+  <p>If a feature is already selected and the user selects another one, the unselect event is sent first, then the select event is sent for the new featire.</p>
+  <p>The selectable attribute can be changed at anyt time.</p>
+</div>
