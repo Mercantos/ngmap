@@ -6,7 +6,8 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TabsModule } from 'ngx-bootstrap';
 
-import { BricMapComponent } from 'bric-gis';
+import { BricGisModule } from 'bric-gis';
+import { HomeComponent } from './components/home/home.component';
 import { BasicMapComponent } from './components/basic-map/basic-map.component';
 import { ConfigMapComponent } from './components/config-map/config-map.component';
 import { WfsMapComponent } from './components/wfs-map/wfs-map.component';
@@ -14,7 +15,7 @@ import { WfsMapComponent } from './components/wfs-map/wfs-map.component';
 @NgModule({
   declarations: [
     AppComponent,
-	  BricMapComponent,
+    HomeComponent,
     BasicMapComponent,
     ConfigMapComponent,
     WfsMapComponent
@@ -23,7 +24,8 @@ import { WfsMapComponent } from './components/wfs-map/wfs-map.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    BricGisModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
