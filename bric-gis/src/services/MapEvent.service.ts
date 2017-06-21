@@ -1,6 +1,6 @@
 import {Injectable}      from '@angular/core'
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import { BricMapEvent } from './models/BricMapEvent';
+import { BricMapEvent } from '../models/BricMapEvent';
 
 @Injectable() 
 export class MapEventService {

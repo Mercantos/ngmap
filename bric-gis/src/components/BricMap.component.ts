@@ -5,9 +5,9 @@ import { DoCheck } from '@angular/core';
 import * as ol from 'openlayers';
 import * as proj4 from 'proj4';
 
-import { BricMapConfig } from './models/BricMapConfig';
-import { BricMapLayer } from './models/BricMapLayer';
-import { MapEventService } from './MapEvent.service';
+import { BricMapConfig } from '../models/BricMapConfig';
+import { BricMapLayer } from '../models/BricMapLayer';
+import { MapEventService } from '../services/MapEvent.service';
 
 @Component({
   selector: 'bric-map',

@@ -1,4 +1,4 @@
-import { MapEventService } from '../MapEvent.service';
+import { MapEventService } from '../services/MapEvent.service';
 import { BricMapEvent } from './BricMapEvent';
 import { BricMapLayerStyle } from './BricMapLayerStyle';
 import * as ol from 'openlayers';
